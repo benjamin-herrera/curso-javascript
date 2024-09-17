@@ -1,66 +1,51 @@
-function juegoDeAdivinanzas() {
-    function iniciarJuego() {
-        let nivel = prompt("Elige un nivel de dificultad: \n1. Fácil (1-10)\n2. Medio (1-100)\n3. Difícil (1-1000)");
+function generarNumeroSecreto(rango) {
+    return Math.floor(Math.random() * rango) + 1;
+}
 
-        let numeroSecreto;
-        let rangoMaximo;
+function juegoAdivinanza() {
+    let iniciar = prompt("Escribe 'JUGAR' para comenzar o 'SALIR' para terminar:").toUpperCase();
 
+    if (iniciar === "JUGAR") {
+        let nivel = prompt("Elige el nivel de dificultad:\n1. Fácil (1-10)\n2. Medio (1-100)\n3. Difícil (1-1000)");
+
+        let rango;
         switch (nivel) {
             case "1":
-                rangoMaximo = 10;
-                numeroSecreto = Math.floor(Math.random() * 10) + 1;
+                rango = 10;
                 break;
             case "2":
-                rangoMaximo = 100;
-                numeroSecreto = Math.floor(Math.random() * 100) + 1;
+                rango = 100;
                 break;
             case "3":
-                rangoMaximo = 1000;
-                numeroSecreto = Math.floor(Math.random() * 1000) + 1;
+                rango = 1000;
                 break;
             default:
-                console.log("Opción no válida. El juego ha terminado.");
+                alert("Nivel inválido. Elige entre 1, 2 o 3.");
                 return;
         }
 
-        let adivinanza;
+        let numeroSecreto = generarNumeroSecreto(rango);
         let intentos = 0;
+        let adivinado = false;
 
-        do {
-            adivinanza = parseInt(prompt(`Adivina el número entre 1 y ${rangoMaximo}:`));
+        while (!adivinado) {
+            let intento = parseInt(prompt(`Adivina el número (entre 1 y ${rango}):`));
             intentos++;
 
-            if (adivinanza > numeroSecreto) {
-                console.log("Demasiado alto, intenta de nuevo.");
-            } else if (adivinanza < numeroSecreto) {
-                console.log("Demasiado bajo, intenta de nuevo.");
+            if (intento === numeroSecreto) {
+                alert(`¡Felicidades! Adivinaste el número en ${intentos} intentos.`);
+                adivinado = true;
+            } else if (intento < numeroSecreto) {
+                alert("El número es mayor.");
             } else {
-                console.log(`¡Felicidades! Adivinaste el número ${numeroSecreto} en ${intentos} intentos.`);
+                alert("El número es menor.");
             }
-        } while (adivinanza !== numeroSecreto);
-
-        jugarDeNuevo();
-    }
-
-    function jugarDeNuevo() {
-        let jugarOtraVez = prompt("¿Quieres jugar de nuevo? (Sí/No)").toUpperCase();
-        if (jugarOtraVez === "SÍ" || jugarOtraVez === "SI") {
-            iniciarJuego();
-        } else {
-            console.log("¡Gracias por jugar! Hasta luego.");
         }
-    }
-
-    console.log("¡Bienvenido al juego de adivinanzas!");
-    let opcion = prompt("Escribe 'JUGAR' para empezar o 'SALIR' para terminar:");
-
-    if (opcion.toUpperCase() === "JUGAR") {
-        iniciarJuego();
-    } else if (opcion.toUpperCase() === "SALIR") {
-        console.log("¡Hasta luego!");
+    } else if (iniciar === "SALIR") {
+        alert("¡Gracias por jugar!");
     } else {
-        console.log("Opción no válida. Por favor, recarga la página e intenta de nuevo.");
+        alert("Opción inválida. Escribe 'JUGAR' o 'SALIR'.");
     }
 }
 
-juegoDeAdivinanzas();
+juegoAdivinanza();
