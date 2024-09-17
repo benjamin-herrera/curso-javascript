@@ -2,55 +2,35 @@ class Estudiante {
     constructor(nombre, notas) {
         this.nombre = nombre;
         this.notas = notas;
-        this.promedio = parseFloat(this.calcularPromedio());  // Convertimos el promedio a número
+        this.promedio = this.calcularPromedio();
         this.categoria = "";
     }
 
-    // Función para calcular el promedio de un estudiante
     calcularPromedio() {
         let suma = this.notas.reduce((acc, nota) => acc + nota, 0);
-        return (suma / this.notas.length).toFixed(2);  // Mantener dos decimales
+        return (suma / this.notas.length).toFixed(2); // Corregido el typo 'lenght' a 'length'
     }
 }
 
-// Lista de estudiantes
-let estudiantes = [
-    new Estudiante("Carlos", [9, 8, 10, 7]),
-    new Estudiante("Lucia", [10, 9, 10, 9]),
-    new Estudiante("Victoria", [6, 5, 7, 8]),
-    new Estudiante("Felipe", [8, 8, 9, 7]),
-    new Estudiante("Bianca", [5, 6, 4, 7]),
-    new Estudiante("Virginia", [10, 10, 9, 10]),
-    new Estudiante("Anna", [10, 10, 10, 10]),
-    new Estudiante("Jorge", [4, 6, 7, 7]),
-    new Estudiante("Martin", [8, 7, 9, 9]),
-    new Estudiante("Agustin", [9, 8, 10, 10]),
-    new Estudiante("Florencia", [9, 5, 7, 8]),
-    new Estudiante("Marcela", [7, 7, 10, 8]),
-    new Estudiante("Ricardo", [9, 8, 8, 9]),
-    new Estudiante("Alvaro", [3, 4, 7, 5]),
-    new Estudiante("Ignacio", [5, 7, 8, 8]),
-    new Estudiante("Jose", [6, 6, 5, 3]),
-    new Estudiante("Nicolas", [3, 4, 7, 9]),
-    new Estudiante("Joaquin", [6, 3, 9, 7]),
-    new Estudiante("Mateo", [7, 8, 4, 10]),
-    new Estudiante("Juan", [5, 1, 2, 4]),
-    new Estudiante("Pablo", [9, 4, 3, 5]),
-    new Estudiante("Pedro", [1, 10, 10, 9]),
-    new Estudiante("Sofia", [7, 8, 7, 7]),
-    new Estudiante("Carla", [8, 6, 9, 7]),
-    new Estudiante("Santino", [6, 6, 6, 7]),
-    new Estudiante("Emilio", [10, 10, 9, 9]),
-    new Estudiante("Rodrigo", [3, 2, 7, 5]),
-    new Estudiante("Julian", [7, 3, 10, 9]),
-    new Estudiante("Paula", [9, 8, 2, 1]),
-    new Estudiante("Diego", [8, 7, 9, 10]),
-    new Estudiante("Ulises", [3, 4, 1, 5]),
-];
+function ingresarEstudiantes() {
+    let estudiantes = [];
+    let cantidad = parseInt(prompt("¿Cuántos estudiantes desea ingresar?"));
 
-// Función para asignar categorías a los estudiantes según su promedio
+    for (let i = 0; i < cantidad; i++) {
+        let nombre = prompt(`Ingrese el nombre del estudiante ${i + 1}:`);
+        let notas = [];
+        for (let j = 0; j < 4; j++) {
+            let nota = parseFloat(prompt(`Ingrese la nota ${j + 1} de ${nombre}:`));
+            notas.push(nota);
+        }
+        estudiantes.push(new Estudiante(nombre, notas));
+    }
+
+    return estudiantes;
+}
+
 function asignarCategorias(estudiantes) {
-    // Ordenar a los estudiantes por promedio (de mayor a menor)
+    // Ordenar estudiantes por promedio (de mayor a menor)
     estudiantes.sort((a, b) => b.promedio - a.promedio);
 
     // Asignar abanderado y escoltas
@@ -58,9 +38,9 @@ function asignarCategorias(estudiantes) {
     if (estudiantes.length > 1) estudiantes[1].categoria = "Primera Escolta";
     if (estudiantes.length > 2) estudiantes[2].categoria = "Segunda Escolta";
 
-    // Asignar categorías en función del promedio
+    // Asignar categorías según el promedio
     estudiantes.forEach(estudiante => {
-        if (estudiante.promedio >= 9){
+        if (estudiante.promedio >= 9) {
             if (!estudiante.categoria) estudiante.categoria = "Sobresaliente";
         } else if (estudiante.promedio >= 8) {
             if (!estudiante.categoria) estudiante.categoria = "Bueno";
@@ -68,14 +48,18 @@ function asignarCategorias(estudiantes) {
             if (!estudiante.categoria) estudiante.categoria = "Aprobado";
         } else {
             if (!estudiante.categoria) estudiante.categoria = "Desaprobado";
-        } 
+        }
     });
 }
 
-// Ejecutar la asignación de categorías
-asignarCategorias(estudiantes);
+function mostrarResultados(estudiantes) {
+    estudiantes.forEach(estudiante => {
+        console.log(`Estudiante: ${estudiante.nombre}, Promedio: ${estudiante.promedio}, Categoría: ${estudiante.categoria}`);
+        alert(`Estudiante: ${estudiante.nombre}, Promedio: ${estudiante.promedio}, Categoría: ${estudiante.categoria}`);
+    });
+}
 
-// Mostrar el resultado
-estudiantes.forEach(estudiante => {
-    console.log(`Estudiante: ${estudiante.nombre}, Promedio: ${estudiante.promedio}, Categoría: ${estudiante.categoria}`);
-});
+// Ejecución del programa
+let estudiantes = ingresarEstudiantes();
+asignarCategorias(estudiantes);
+mostrarResultados(estudiantes);
