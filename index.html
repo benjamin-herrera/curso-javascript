@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simulador de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .producto {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            display: inline-block;
+        }
+        #carrito {
+            margin-top: 20px;
+        }
+        #carrito li {
+            list-style: none;
+        }
+        #mensaje {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+
+    <h1>Tienda Online</h1>
+    <p>Selecciona los productos que deseas comprar:</p>
+
+    <div id="productos">
+        <div class="producto">
+            <h2>Laptop</h2>
+            <p>Precio: $1000</p>
+            <button class="agregar-carrito" data-producto="Laptop" data-precio="1000">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <h2>Auriculares</h2>
+            <p>Precio: $100</p>
+            <button class="agregar-carrito" data-producto="Auriculares" data-precio="100">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+            <h2>Smartphone</h2>
+            <p>Precio: $600</p>
+            <button class="agregar-carrito" data-producto="Smartphone" data-precio="600">Agregar al carrito</button>
+        </div>
+    </div>
+
+    <h2>Carrito de Compras</h2>
+    <ul id="carrito">
+        <!-- Los productos añadidos al carrito aparecerán aquí -->
+    </ul>
+
+    <h3>Total: $<span id="total">0</span></h3>
+
+    <button id="finalizar-compra">Finalizar Compra</button>
+    <button id="cancelar-compra">Cancelar Todo</button>
+    <button id="deshacer-movimiento">Deshacer Último Movimiento</button>
+
+    <p id="mensaje"></p> <!-- Mensaje de finalización -->
+
     <script src="main.js"></script>
 </body>
 </html>
