@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+header {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+input, button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.cocktail-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.cocktail-card {
+    background-color: white;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+}
+
+.cocktail-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.cocktail-recipe {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cocktail-recipe img {
+    width: 300px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+}
+
