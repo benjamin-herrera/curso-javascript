@@ -6,12 +6,36 @@ const API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 
 searchBtn.addEventListener('click', fetchCocktails);
 
+function saveToLocalStorage(cocktailName) {
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    if (!searchHistory.includes(cocktailName)) {
+        searchHistory.push(cocktailName);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
+}
+
+function loadSearchHistory() {
+    const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    if (searchHistory.length > 0) {
+        const historyContainer = document.createElement('div');
+        historyContainer.innerHTML = `
+            <h3>Historial de búsquedas</h3>
+            <ul id="searchHistoryList">
+                ${searchHistory.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+        `;
+        document.body.appendChild(historyContainer);
+    }
+}
+
 async function fetchCocktails() {
     const query = searchInput.value;
     if (query === '') {
         alert('Introduce un nombre o ingrediente');
         return;
     }
+
+    saveToLocalStorage(query);
 
     try {
         const response = await fetch(`${API_URL}${query}`);
@@ -20,7 +44,7 @@ async function fetchCocktails() {
         if (data.drinks) {
             displayCocktails(data.drinks);
         } else {
-            cocktailList.innerHTML = '<p>No se encontraron cócteles.</p>'; // Mensaje si no hay resultados
+            cocktailList.innerHTML = '<p>No se encontraron cócteles.</p>';
         }
     } catch (error) {
         console.error('Error al obtener los cócteles:', error);
@@ -33,7 +57,7 @@ function displayCocktails(drinks) {
     drinks.forEach(drink => {
         const card = document.createElement('div');
         card.classList.add('cocktail-card');
-        
+
         card.innerHTML = `
             <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" class="cocktail-img">
             <h3>${drink.strDrink}</h3>
@@ -85,6 +109,9 @@ function getIngredientsList(cocktail) {
     }
     return ingredients;
 }
+
 function goBack() {
     fetchCocktails();
 }
+
+document.addEventListener('DOMContentLoaded', loadSearchHistory);
